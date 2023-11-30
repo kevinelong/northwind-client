@@ -1,0 +1,26 @@
+<body>
+    <select id="catList">
+        <option value="">Select a category</option>
+    </select>
+    <select id="prodList">
+        <option value="">Select a Product</option>
+    </select>
+</body>
+<script>
+fetch("http://127.0.0.1:8081/api/categories")
+.then(r=>r.json())
+.then(data=>{
+    data.forEach(item=>catList.innerHTML += `<option value="${item.categoryId}">${item.name} - ${item.description}</option>`)
+})
+
+catList.addEventListener("change", e=>{
+    fetch("http://localhost:8081/api/products/")
+    .then(r=>r.json())
+    .then(data =>{
+        prodList.innerHTML = ""; //CLEAR PROD LIST
+        data.filter(i=>i.categoryId === catList.value).forEach(item=>{
+            prodList.innerHTML += `<option>${item.productName} - $${Number(item.unitPrice).toFixed(2)}</option>`
+        })
+    })
+})
+</script>
