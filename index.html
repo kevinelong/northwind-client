@@ -1,10 +1,27 @@
+<style>
+    td{
+        text-align: right;
+        font-weight: bold;
+    }
+    th{
+        text-align: left;
+        font-weight: normal;
+        text-transform: capitalize;
+    }
+
+</style>
 <body>
     <select id="catList">
         <option value="">Select a category</option>
     </select>
+
     <select id="prodList">
         <option value="">Select a Product</option>
     </select>
+
+    <h1>Details:</h1>
+    <table id="details"></table>
+
 </body>
 <script>
 fetch("http://127.0.0.1:8081/api/categories")
@@ -17,10 +34,30 @@ catList.addEventListener("change", e=>{
     fetch("http://localhost:8081/api/products/")
     .then(r=>r.json())
     .then(data =>{
-        prodList.innerHTML = ""; //CLEAR PROD LIST
+        details.innerHTML = ""; //CLEAR 
+        prodList.innerHTML = "<option value=\"\">Select a Product</option>"; //CLEAR PROD LIST
         data.filter(i=>i.categoryId === catList.value).forEach(item=>{
-            prodList.innerHTML += `<option>${item.productName} - $${Number(item.unitPrice).toFixed(2)}</option>`
+            prodList.innerHTML += `<option value="${item.productId}">${item.productName} - $${Number(item.unitPrice).toFixed(2)}</option>`
         })
     })
 })
+
+
+prodList.addEventListener("change", e=>{
+    fetch("http://localhost:8081/api/products/" + prodList.value)
+    .then(r=>r.json())
+    .then(item =>{
+
+        details.innerHTML = ""; //CLEAR 
+        
+        details.innerHTML += `<tr><th>productId</th><td>${item.productId}</td></tr>`
+        details.innerHTML += `<tr><th>productName</th><td>${item.productName}</td></tr>`
+        details.innerHTML += `<tr><th>unitPrice</th><td>$${Number(item.unitPrice).toFixed(2)}</td></tr>`
+        details.innerHTML += `<tr><th>unitsInStock</th><td>${item.unitsInStock}</td></tr>`
+        details.innerHTML += `<tr><th>supplier</th><td>${item.supplier}</td></tr>`
+        details.innerHTML += `<tr><th>discontinued</th><td>${item.discontinued}</td></tr>`
+    })
+})
+
+
 </script>
