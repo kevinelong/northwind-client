@@ -44,7 +44,20 @@ document.addEventListener("DOMContentLoaded", e => {
 
 
     prodList.addEventListener("change", e => {
-        window.location = "details.html?productId=" + prodList.value;
+        fetch("http://localhost:8081/api/products/" + prodList.value)
+        .then(r => r.json())
+        .then(item => {
+            details.innerHTML = ""; //CLEAR 
+            details.innerHTML += `<tr><th>product Id:</th><td>${item.productId}</td></tr>`
+            details.innerHTML += `<tr><th>product Name:</th><td>${item.productName}</td></tr>`
+            details.innerHTML += `<tr><th>unit Price:</th><td>$${Number(item.unitPrice).toFixed(2)}</td></tr>`
+            details.innerHTML += `<tr><th>Link to details:</th><td>
+                <a href="details.html?productId=${item.productId}">
+                    <button> Details </button>
+                </a>
+            </td></tr>`
+        })
+        // window.location = "details.html?productId=" + prodList.value;
     })
 
 }) //END DOM CONTENT LOADED
