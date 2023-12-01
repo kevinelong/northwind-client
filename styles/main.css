@@ -1,0 +1,14 @@
+td {
+    text-align: right;
+    font-weight: bold;
+}
+
+th {
+    text-align: left;
+    font-weight: normal;
+    text-transform: capitalize;
+}
+
+.hidden {
+    display: none;
+}
