@@ -12,3 +12,9 @@ th {
 .hidden {
     display: none;
 }
+
+#productImage{
+    height: 20px;
+    width: 20px;
+    object-fit: contain;
+}

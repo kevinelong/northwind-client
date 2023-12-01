@@ -13,6 +13,7 @@ document.addEventListener("DOMContentLoaded", e => {
             fetch("http://localhost:8081/api/products/")
             .then(r => r.json())
             .then(data => {
+                data.sort((a,b) => a.productName > b.productName ? 1 : -1);//EXTRA CREDIT SORT
                 prodList.innerHTML = "<option value=\"\">Select a Product</option>"; //CLEAR PROD LIST
                 data.forEach(item => {
                     prodList.innerHTML += `<option value="${item.productId}">${item.productName} - $${Number(item.unitPrice).toFixed(2)}</option>`
@@ -35,7 +36,9 @@ document.addEventListener("DOMContentLoaded", e => {
         fetch("http://localhost:8081/api/products/")
             .then(r => r.json())
             .then(data => {
+                data.sort((a,b) => a.productName > b.productName ? 1 : -1);//EXTRA CREDIT SORT
                 prodList.innerHTML = "<option value=\"\">Select a Product</option>"; //CLEAR PROD LIST
+                productImage.src = `./images/cat${catList.value}.png`;
                 data.filter(i => i.categoryId === catList.value).forEach(item => {
                     prodList.innerHTML += `<option value="${item.productId}">${item.productName} - $${Number(item.unitPrice).toFixed(2)}</option>`
                 })
