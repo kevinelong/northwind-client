@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", e => {
                 data.sort((a,b) => a.productName > b.productName ? 1 : -1);//EXTRA CREDIT SORT
                 prodList.innerHTML = "<option value=\"\">Select a Product</option>"; //CLEAR PROD LIST
                 productImage.src = `./images/cat${catList.value}.png`;
-                data.filter(i => i.categoryId === catList.value).forEach(item => {
+                data.filter(i => i.categoryId == catList.value).forEach(item => {
                     prodList.innerHTML += `<option value="${item.productId}">${item.productName} - $${Number(item.unitPrice).toFixed(2)}</option>`
                 })
             })

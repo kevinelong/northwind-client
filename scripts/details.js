@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", e => {
     fetch("http://localhost:8081/api/products/" + productId)
         .then(r => r.json())
         .then(item => {
-
+            image.src = `images/prod${item.productId}.jpg`
             details.innerHTML = ""; //CLEAR 
 
             details.innerHTML += `<tr><th>product Id:</th><td>${item.productId}</td></tr>`
